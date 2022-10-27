@@ -1,4 +1,5 @@
 import 'package:app_bienestar_universitario/src/bookings/providers/booking_provider.dart';
+import 'package:app_bienestar_universitario/src/bookings/providers/hours_enable_provider.dart';
 import 'package:app_bienestar_universitario/src/bookings/ui/widgets/select_day_widget.dart';
 import 'package:app_bienestar_universitario/src/core/widgets/rounded_button.dart';
 import 'package:app_bienestar_universitario/src/core/widgets/snackbar.dart';
@@ -15,7 +16,6 @@ class CreateBookingPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(bookingProvider);
     final theme = Theme.of(context);
-    String title = "uwu";
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -62,6 +62,7 @@ class CreateBookingPage extends HookConsumerWidget {
               onTap: () async {
                 bool isCreated = await provider.createBooking();
                 if (isCreated) {
+                  ref.refresh(hoursEnableProvider);
                   Navigator.pop(context);
                   showMySnackBar(context,
                       message: "Fue agendado el servicio correctamente :D");

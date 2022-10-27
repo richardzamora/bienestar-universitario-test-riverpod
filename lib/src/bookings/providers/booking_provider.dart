@@ -29,7 +29,7 @@ class BookingProvider {
               personProvider.day!.day, personProvider.hour!.hour),
           personId: personProvider.person,
           offeredServiceId: personProvider.offeredService,
-          id: 5);
+          id: 1000000);
       bool result = await bookingRepository.createBooking(booking);
       personProvider.day = null;
       personProvider.hour = null;

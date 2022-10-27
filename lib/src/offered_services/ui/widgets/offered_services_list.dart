@@ -1,3 +1,4 @@
+import 'package:app_bienestar_universitario/src/bookings/providers/hours_enable_provider.dart';
 import 'package:app_bienestar_universitario/src/core/widgets/option_widget.dart';
 import 'package:app_bienestar_universitario/src/home/providers/person_provider.dart';
 import 'package:app_bienestar_universitario/src/offered_services/providers/offered_services_provider.dart';
@@ -29,6 +30,7 @@ class _OfferedServicesListState extends ConsumerState<OfferedServicesList> {
                       isSelected: personProv.offeredService == data[index * 2],
                       onTap: () {
                         personProv.offeredService = data[index * 2];
+                        ref.refresh(hoursEnableProvider);
                         setState(() {});
                       },
                       content: data[index * 2].name ?? "upss")),
@@ -41,6 +43,7 @@ class _OfferedServicesListState extends ConsumerState<OfferedServicesList> {
                           personProv.offeredService == data[index * 2 + 1],
                       onTap: () {
                         personProv.offeredService = data[index * 2 + 1];
+                        ref.refresh(hoursEnableProvider);
                         setState(() {});
                       },
                       content: data[index * 2 + 1].name ?? "upss"))

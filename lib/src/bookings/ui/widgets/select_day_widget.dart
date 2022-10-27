@@ -3,6 +3,8 @@ import 'package:app_bienestar_universitario/src/home/providers/person_provider.d
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../providers/hours_enable_provider.dart';
+
 class SelectDayWidget extends StatefulHookConsumerWidget {
   const SelectDayWidget({super.key});
 
@@ -29,6 +31,7 @@ class _SelectDayWidgetState extends ConsumerState<SelectDayWidget> {
                     : false,
             onTap: () {
               provider.day = tomorrow;
+              ref.refresh(hoursEnableProvider);
               setState(() {});
             },
             content: "${tomorrow.day}/${tomorrow.month}/${tomorrow.year}"),
@@ -39,6 +42,7 @@ class _SelectDayWidgetState extends ConsumerState<SelectDayWidget> {
                 : false,
             onTap: () {
               provider.day = nextTomorrow;
+              ref.refresh(hoursEnableProvider);
               setState(() {});
             },
             content:

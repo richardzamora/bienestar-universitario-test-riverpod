@@ -32,7 +32,9 @@ class Booking {
 
   factory Booking.fromJson(Map<String, dynamic> json) => Booking(
         id: json["id"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
+        date: json["date"] == null
+            ? null
+            : DateTime.parse(json["date"]).toLocal(),
         personId:
             json["personId"] == null ? null : Person.fromJson(json["personId"]),
         offeredServiceId: json["offeredServiceId"] == null

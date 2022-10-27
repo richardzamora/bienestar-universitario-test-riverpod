@@ -36,4 +36,17 @@ class HttpBookingRepository extends BookingRepository {
     }
     return [];
   }
+
+  @override
+  Future<List<Booking>> allBookings() async {
+    try {
+      final responseData = await httpService.getAll(
+        '$path/allBookings',
+      );
+      return List<Booking>.from(responseData.map((x) => Booking.fromJson(x)));
+    } on Exception catch (e) {
+      print(e);
+    }
+    return [];
+  }
 }
