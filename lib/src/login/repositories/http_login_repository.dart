@@ -13,7 +13,7 @@ class HttpLoginRepository extends LoginRepository {
   Future<Person> login(Credentials credentials) async {
     try {
       final responseData = await httpService.get(
-        '$path/login/email/${credentials.email}/pass/${credentials.password}',
+        '$path/email/${credentials.email}/pass/${credentials.password}',
       );
       return Person.fromJson(responseData);
     } on Exception catch (e) {

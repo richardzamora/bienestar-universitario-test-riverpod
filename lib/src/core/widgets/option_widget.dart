@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 
 class OptionWidget extends StatelessWidget {
-  const OptionWidget({
-    Key? key,
-    required this.isSelected,
-    required this.onTap,
-    required this.content,
-    this.height = 40,
-  }) : super(key: key);
+  const OptionWidget(
+      {Key? key,
+      required this.isSelected,
+      required this.onTap,
+      required this.content,
+      this.height = 40,
+      this.width})
+      : super(key: key);
 
   final bool isSelected;
   final VoidCallback onTap;
   final String content;
   final double height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      width: MediaQuery.of(context).size.width * 0.35,
+      width: width ?? MediaQuery.of(context).size.width * 0.35,
       height: height,
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.all(isSelected ? 0 : 2),

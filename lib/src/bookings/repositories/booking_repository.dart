@@ -16,4 +16,6 @@ abstract class BookingRepository {
   Future<List<Booking>> listBooking(int personId);
 
   Future<List<Booking>> allBookings();
+
+  Future<bool> deleteBooking(int id);
 }

@@ -27,5 +27,6 @@ abstract class HttpService {
   Future<dynamic> put();
 
   /// Http delete request
-  Future<dynamic> delete();
+  Future<dynamic> delete(String endpoint,
+      {Map<String, dynamic>? queryParameters, Map<String, dynamic>? data});
 }

@@ -49,4 +49,15 @@ class HttpBookingRepository extends BookingRepository {
     }
     return [];
   }
+
+  @override
+  Future<bool> deleteBooking(int id) async {
+    try {
+      final responseData = await httpService.delete('$path/deleteBooking/$id');
+      return true;
+    } on Exception catch (e) {
+      print(e);
+    }
+    return false;
+  }
 }

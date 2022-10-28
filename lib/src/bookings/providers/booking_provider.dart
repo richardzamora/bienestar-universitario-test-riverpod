@@ -29,7 +29,7 @@ class BookingProvider {
               personProvider.day!.day, personProvider.hour!.hour),
           personId: personProvider.person,
           offeredServiceId: personProvider.offeredService,
-          id: 1000000);
+          id: 1000);
       bool result = await bookingRepository.createBooking(booking);
       personProvider.day = null;
       personProvider.hour = null;
@@ -38,5 +38,9 @@ class BookingProvider {
       return result;
     }
     return false;
+  }
+
+  Future<bool> deleteBooking(int bookingId) {
+    return bookingRepository.deleteBooking(bookingId);
   }
 }

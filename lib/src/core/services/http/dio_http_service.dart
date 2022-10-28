@@ -104,9 +104,22 @@ class DioHttpService implements HttpService {
   }
 
   @override
-  Future delete() {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future delete(String endpoint,
+      {Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? data}) async {
+    final Response response = await dio.delete<String>(endpoint,
+        queryParameters: queryParameters, data: data);
+
+    if (response.data == null ||
+        !(response.statusCode == 200 || response.statusCode == 201)) {
+      throw HttpException(
+        title: 'Http Error!',
+        statusCode: response.statusCode,
+        message: response.statusMessage,
+      );
+    }
+
+    return response.data;
   }
 
   @override
