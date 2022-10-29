@@ -1,5 +1,6 @@
 import 'package:app_bienestar_universitario/src/bookings/providers/booking_provider.dart';
 import 'package:app_bienestar_universitario/src/bookings/providers/list_bookings_provider.dart';
+import 'package:app_bienestar_universitario/src/core/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -52,44 +53,72 @@ class _ListBookingsPageState extends ConsumerState<ListBookingsPage> {
                 if (data.isNotEmpty) {
                   return SingleChildScrollView(
                     child: Column(
-                      children: List.generate(
-                          data.length,
-                          (index) => Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 25),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all()),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                        "${data[index].date!.day}/${data[index].date!.month}/${data[index].date!.year}"),
-                                    Text(DateFormat('kk:mm')
-                                        .format(data[index].date!)),
-                                    Text(data[index].offeredServiceId?.name ??
-                                        ""),
-                                    SizedBox(
-                                      width: 25,
-                                      height: 25,
-                                      child: IconButton(
-                                          padding: new EdgeInsets.all(0.0),
-                                          onPressed: () {
-                                            bookingProv
-                                                .deleteBooking(data[index].id!);
-                                            ref.refresh(listBookingsProvider);
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            size: 20,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              )),
+                      children: List.generate(data.length, (index) {
+                        final String day =
+                            "${data[index].date!.day}/${data[index].date!.month}/${data[index].date!.year}";
+                        final String hour =
+                            DateFormat('kk:mm').format(data[index].date!);
+                        final String name =
+                            data[index].offeredServiceId?.name ?? "";
+                        return Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 25),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all()),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(day),
+                              Text(hour),
+                              Text(name),
+                              SizedBox(
+                                width: 25,
+                                height: 25,
+                                child: IconButton(
+                                    padding: const EdgeInsets.all(0.0),
+                                    onPressed: () {
+                                      Widget cancelButton = MaterialButton(
+                                        child: const Text("cancelar"),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      );
+                                      Widget continueButton = MaterialButton(
+                                        child: const Text("continuar"),
+                                        onPressed: () async {
+                                          await bookingProv
+                                              .deleteBooking(data[index].id!);
+                                          ref.refresh(listBookingsProvider);
+                                          Navigator.pop(context);
+                                          showMySnackBar(context,
+                                              message:
+                                                  "Se ha eliminado la reserva");
+                                        },
+                                      );
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text(
+                                              "Está seguro que desea eliminar la reserva:"),
+                                          content: Text("$day $hour $name"),
+                                          actions: [
+                                            cancelButton,
+                                            continueButton,
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      size: 20,
+                                    )),
+                              )
+                            ],
+                          ),
+                        );
+                      }),
                     ),
                   );
                 } else {

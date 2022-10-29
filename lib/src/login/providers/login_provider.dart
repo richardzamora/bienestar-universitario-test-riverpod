@@ -58,6 +58,8 @@ class LoginProvider {
         bool result = await loginRepository.register(personRegistered);
         personProvider.person = personRegistered;
         Navigator.popUntil(context, (route) => route.isFirst);
+        showMySnackBar(context,
+            message: "El usuario se ha registrado exitosamente");
       } on Exception catch (e) {
         showMySnackBar(context,
             message: "El nombre y o contraseña son incorrectos");
